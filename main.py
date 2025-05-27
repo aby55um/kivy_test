@@ -3,8 +3,11 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
+from kivy.core.window import Window
 
 import datetime
+
+width, height = Window.size
 
 class Item():
     def __init__(self, text):
@@ -21,15 +24,15 @@ class TodoList(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.item_list = []
-        self.button = Button(text="Add todo", size_hint=(.1,.05), pos=(250, 480))
+        self.button = Button(text="Add todo", size_hint=(.1,.05), pos=(0.25 * width, 0.8 * height))
         self.button.bind(on_press=self.button_press)
-        self.text_input = TextInput(text="", multiline=False, size_hint=(.3,.05), pos=(350,480))
+        self.text_input = TextInput(text="", multiline=False, size_hint=(.3,.05), pos=(0.4 * width,0.8 * height))
         self.add_widget(self.button)
         self.add_widget(self.text_input)
 
     def add_item(self, item):
         self.item_list.append(item)
-        self.add_widget(Label(text=item.text, size_hint=(.1,.35), pos=(150,350 - 25 * len(self.item_list))))
+        self.add_widget(Label(text=item.text, size_hint=(.1,.35), pos=(0.25 * width,0.65 * height - 0.05 * height * len(self.item_list))))
 
 class MyApp(App):
 
