@@ -14,6 +14,10 @@ class Item():
         self.text = text
         self.completed = False
         self.date = datetime.datetime.now()
+        self.remove_button = None
+
+    #def set_remove_button(self, label):
+    #    self.remove_button = label
 
 class TodoList(FloatLayout):
     def button_press(self, instance):
@@ -31,8 +35,12 @@ class TodoList(FloatLayout):
         self.add_widget(self.text_input)
 
     def add_item(self, item):
-        self.item_list.append(item)
-        self.add_widget(Label(text=item.text, size_hint=(.1,.35), pos=(0.25 * width,0.65 * height - 0.05 * height * len(self.item_list))))
+        if item.text != '':
+            self.item_list.append(item)
+            self.add_widget(Label(text=item.text, size_hint=(.1,.35), pos=(0.25 * width,0.65 * height - 0.09 * height * len(self.item_list))))
+            #item.remove_button = Label(text='Remove', size_hint=(.1,..35), pos=(0.25 * width,0.65 * height - 0.05 * height * len(self.item_list)))
+            item.remove = Button(text='Remove', size_hint=(.09,.05), pos=(0.45 * width,0.80 * height - 0.09 * height * len(self.item_list)))
+            self.add_widget(item.remove)
 
 class MyApp(App):
 
