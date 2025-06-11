@@ -20,16 +20,19 @@ class Item():
     #    self.remove_button = label
 
 class TodoList(FloatLayout):
-    def button_press(self, instance):
+    def add_button_press(self, instance):
         item = Item(self.text_input.text)
         self.add_item(item)
         self.text_input.text=''
+
+    def remove_button_press(self, instance):
+        self.remove_item(item)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.item_list = []
         self.button = Button(text="Add todo", size_hint=(.1,.05), pos=(0.25 * width, 0.8 * height))
-        self.button.bind(on_press=self.button_press)
+        self.button.bind(on_press=self.add_button_press)
         self.text_input = TextInput(text="", multiline=False, size_hint=(.3,.05), pos=(0.4 * width,0.8 * height))
         self.add_widget(self.button)
         self.add_widget(self.text_input)
@@ -40,7 +43,11 @@ class TodoList(FloatLayout):
             self.add_widget(Label(text=item.text, size_hint=(.1,.35), pos=(0.25 * width,0.65 * height - 0.09 * height * len(self.item_list))))
             #item.remove_button = Label(text='Remove', size_hint=(.1,..35), pos=(0.25 * width,0.65 * height - 0.05 * height * len(self.item_list)))
             item.remove = Button(text='Remove', size_hint=(.09,.05), pos=(0.45 * width,0.80 * height - 0.09 * height * len(self.item_list)))
+            item.remove.bind(on_press=self.remove_button_press)
             self.add_widget(item.remove)
+
+    def remove_item(self, item):
+        self.item_list.pop(item)
 
 class MyApp(App):
 
